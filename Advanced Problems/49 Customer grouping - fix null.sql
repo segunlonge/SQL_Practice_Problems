@@ -1,0 +1,1 @@
+--There is no null value for customer ID MAISD
