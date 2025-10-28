@@ -1,7 +1,9 @@
 /*
-Question 44: Late orders vs. total orders - missing employee
+Question 45: Late orders vs. total orders - fix null
 --------------------------------------------------------------------------------------------------------------------------
-There's an employee missing from Question 44 (query should return 9 rows instead of 8. Fix it!)
+
+In question 44 Buchanan showed NULL for late orders because he has not late orders.
+Fix the query to show 0 rather than NULL (Fix using ISNULL function)
 
 */
 
@@ -19,7 +21,7 @@ WITH cte_emplyees_late_orders
                    E.lastname)
 SELECT O.employeeid,
        E.lastname,
-       LO.totallateorders,
+       Isnull(LO.totallateorders, 0),
        Count(O.orderid) AS AllOrders
 FROM   [SQL_Problems].[dbo].[orders] O
        LEFT JOIN cte_emplyees_late_orders LO
@@ -29,5 +31,3 @@ FROM   [SQL_Problems].[dbo].[orders] O
 GROUP  BY O.employeeid,
           E.lastname,
           LO.totallateorders 
-
-

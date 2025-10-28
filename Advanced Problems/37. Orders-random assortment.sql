@@ -1,3 +1,10 @@
+/*
+Question 37: Orders - random assortment
+--------------------------------------------------------------------------------------------------------------------------
+
+Show a random set of 2% of all orders
+*/
+
 --Technique for generating random number for each row which the Rand() does not return
 --The NewID() function gives a GUID number which we don't want (consists of numbers and letters)
 --The Checksum() function returns a checksum or hash value for a given expression which a numeric value

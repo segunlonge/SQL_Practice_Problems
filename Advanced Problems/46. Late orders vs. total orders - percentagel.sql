@@ -1,7 +1,8 @@
 /*
-Question 44: Late orders vs. total orders - missing employee
+Question 46: Late orders vs. total orders - percentage
 --------------------------------------------------------------------------------------------------------------------------
-There's an employee missing from Question 44 (query should return 9 rows instead of 8. Fix it!)
+
+Get the percentage of late orders over total orders
 
 */
 
@@ -19,8 +20,10 @@ WITH cte_emplyees_late_orders
                    E.lastname)
 SELECT O.employeeid,
        E.lastname,
-       LO.totallateorders,
-       Count(O.orderid) AS AllOrders
+       Isnull(LO.totallateorders, 0)      AS LateOrders,
+       Count(O.orderid)                   AS AllOrders,
+       Cast(Isnull(LO.totallateorders, 0) AS DECIMAL(7, 2)) / Cast(
+       Count(O.orderid) AS DECIMAL(7, 2)) AS PercentageLateOrders
 FROM   [SQL_Problems].[dbo].[orders] O
        LEFT JOIN cte_emplyees_late_orders LO
               ON O.employeeid = LO.employeeid
@@ -29,5 +32,3 @@ FROM   [SQL_Problems].[dbo].[orders] O
 GROUP  BY O.employeeid,
           E.lastname,
           LO.totallateorders 
-
-

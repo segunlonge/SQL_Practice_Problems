@@ -1,8 +1,8 @@
 /*
-Question 44: Late orders vs. total orders - missing employee
+Question 43: Late orders vs. total orders
 --------------------------------------------------------------------------------------------------------------------------
-There's an employee missing from Question 44 (query should return 9 rows instead of 8. Fix it!)
 
+Which sales people have the most orders arriving late? And how does that stack against the total orders related to them?
 */
 
 WITH cte_emplyees_late_orders
@@ -17,17 +17,22 @@ WITH cte_emplyees_late_orders
          WHERE  shippeddate >= requireddate
          GROUP  BY O.[employeeid],
                    E.lastname)
-SELECT O.employeeid,
-       E.lastname,
-       LO.totallateorders,
-       Count(O.orderid) AS AllOrders
+SELECT LO.employeeid,
+       LO.lastname,
+	   Count(O.orderid) AS AllOrders,
+       LO.totallateorders
 FROM   [SQL_Problems].[dbo].[orders] O
-       LEFT JOIN cte_emplyees_late_orders LO
-              ON O.employeeid = LO.employeeid
-       LEFT JOIN [SQL_Problems].[dbo].[employees] E
-              ON E.employeeid = O.employeeid
-GROUP  BY O.employeeid,
-          E.lastname,
+       JOIN cte_emplyees_late_orders LO
+         ON O.employeeid = LO.employeeid
+GROUP  BY LO.employeeid,
+          LO.lastname,
           LO.totallateorders 
+
+
+
+
+
+
+
 
 
